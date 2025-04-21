@@ -9,7 +9,7 @@ import moment from "moment";
 
 const MatronVisitors = () => {
   const [visitors, setVisitors] = useState([]);
-  const [tenants, setTenants] = useState([]);
+  const [tenants] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showVisitorForm, setShowVisitorForm] = useState(false);
   const [filters, setFilters] = useState({
@@ -25,8 +25,8 @@ const MatronVisitors = () => {
         setVisitors(visitorsResponse.data.data);
 
         // Fetch all tenants for the form
-        const tenantsResponse = await api.get("/auth/tenants");
-        setTenants(tenantsResponse.data.data);
+        // const tenantsResponse = await api.get("/auth/tenants");
+        // setTenants(tenantsResponse.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
         toast.error("Failed to load data. Please try again.");
