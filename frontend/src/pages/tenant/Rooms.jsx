@@ -15,7 +15,7 @@ const TenantRooms = () => {
     maxPrice: "",
     capacity: "",
   });
-
+  console.log(rooms);
   useEffect(() => {
     const fetchRooms = async () => {
       try {

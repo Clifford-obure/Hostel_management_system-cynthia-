@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // src/pages/tenant/Visitors.jsx
 import { useState, useEffect } from "react";
 import api from "../../services/api";

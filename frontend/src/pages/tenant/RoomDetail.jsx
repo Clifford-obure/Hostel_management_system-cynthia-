@@ -14,16 +14,17 @@ import {
 import { toast } from "react-toastify";
 
 const RoomDetail = () => {
-  const { id } = useParams();
+  const { id, roomId } = useParams();
   const navigate = useNavigate();
   const [room, setRoom] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isBooking, setIsBooking] = useState(false);
+  console.log(useParams());
 
   useEffect(() => {
     const fetchRoomDetail = async () => {
       try {
-        const response = await api.get(`/rooms/${id}`);
+        const response = await api.get(`/rooms/${roomId}`);
         setRoom(response.data.data);
       } catch (error) {
         console.error("Error fetching room details:", error);
