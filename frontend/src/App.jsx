@@ -43,6 +43,7 @@ import MatronRoomsForm from "./pages/matron/RoomForm";
 // Home Page
 import Home from "./pages/common/Home";
 import MatronRoomDetail from "./pages/matron/RoomDetail";
+import BookRoom from "./pages/tenant/BookRoom";
 
 function App() {
   return (
@@ -66,6 +67,7 @@ function App() {
               />
 
               <Route path="/tenant/my-booking" element={<TenantBooking />} />
+              <Route path="/tenant/book-room/:roomId" element={<BookRoom />} />
               <Route path="/tenant/my-visitors" element={<TenantVisitors />} />
               <Route
                 path="/tenant/my-complaints"

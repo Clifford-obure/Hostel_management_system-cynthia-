@@ -6,44 +6,33 @@ const Room = require("../models/Room");
 // @access  Private (Tenant)
 exports.createBooking = async (req, res) => {
   try {
+    console.log("User:", req.user);
+    console.log("Body:", req.body);
+
     req.body.tenant = req.user.id;
 
-    // Check if room exists and is available
     const room = await Room.findById(req.body.room);
-
     if (!room) {
-      return res.status(404).json({
-        success: false,
-        error: "Room not found",
-      });
+      return res.status(404).json({ success: false, error: "Room not found" });
     }
 
     if (room.status !== "available") {
-      return res.status(400).json({
-        success: false,
-        error: "Room is not available for booking",
-      });
+      return res
+        .status(400)
+        .json({ success: false, error: "Room is not available" });
     }
 
-    // Calculate total amount
     const totalAmount = room.price * req.body.duration;
     req.body.totalAmount = totalAmount;
 
-    // Create booking
     const booking = await Booking.create(req.body);
 
-    // Update room status to occupied
     await Room.findByIdAndUpdate(req.body.room, { status: "occupied" });
 
-    res.status(201).json({
-      success: true,
-      data: booking,
-    });
+    res.status(201).json({ success: true, data: booking });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: error.message,
-    });
+    console.error("Booking Error:", error); // 👈 this line is important
+    res.status(500).json({ success: false, error: error.message });
   }
 };
 
