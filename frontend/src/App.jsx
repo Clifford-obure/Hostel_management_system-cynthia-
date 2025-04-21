@@ -44,6 +44,7 @@ import MatronRoomsForm from "./pages/matron/RoomForm";
 import Home from "./pages/common/Home";
 import MatronRoomDetail from "./pages/matron/RoomDetail";
 import BookRoom from "./pages/tenant/BookRoom";
+import ComplaintForm from "./pages/tenant/ComplaintForm";
 
 function App() {
   return (
@@ -72,6 +73,10 @@ function App() {
               <Route
                 path="/tenant/my-complaints"
                 element={<TenantComplaints />}
+              />
+              <Route
+                path="/tenant/my-complaints/add"
+                element={<ComplaintForm />}
               />
               <Route
                 path="/tenant/marketplace"
