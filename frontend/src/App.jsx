@@ -42,6 +42,7 @@ import MatronRoomsForm from "./pages/matron/RoomForm";
 
 // Home Page
 import Home from "./pages/common/Home";
+import MatronRoomDetail from "./pages/matron/RoomDetail";
 
 function App() {
   return (
@@ -83,6 +84,7 @@ function App() {
             <Route element={<DashboardLayout />}>
               <Route path="/matron/dashboard" element={<MatronDashboard />} />
               <Route path="/matron/rooms" element={<MatronRooms />} />
+              <Route path="/matron/rooms/:id" element={<MatronRoomDetail />} />
               <Route path="/matron/rooms/add" element={<MatronRoomsForm />} />
               <Route path="/matron/bookings" element={<MatronBookings />} />
               <Route path="/matron/visitors" element={<MatronVisitors />} />
