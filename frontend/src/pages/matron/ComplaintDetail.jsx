@@ -48,15 +48,14 @@ const MatronComplaintDetail = () => {
       status: "",
       resolution: "",
     },
-    validationSchema: Yup.object({
-      status: Yup.string().required("Status is required"),
-      resolution: Yup.string().when("status", {
-        is: "resolved",
-        then: Yup.string().required(
-          "Resolution is required when status is resolved"
-        ),
-      }),
+    resolution: Yup.string().when("status", {
+      is: "resolved",
+      then: Yup.string().required(
+        "Resolution is required when status is resolved"
+      ),
+      otherwise: Yup.string().nullable(),
     }),
+
     onSubmit: async (values) => {
       try {
         setUpdating(true);
@@ -301,7 +300,7 @@ const MatronComplaintDetail = () => {
                   <button
                     type="submit"
                     disabled={updating}
-                    className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                    className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium  bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                   >
                     {updating ? "Updating..." : "Update Complaint"}
                   </button>

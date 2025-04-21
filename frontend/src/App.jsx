@@ -45,6 +45,7 @@ import Home from "./pages/common/Home";
 import MatronRoomDetail from "./pages/matron/RoomDetail";
 import BookRoom from "./pages/tenant/BookRoom";
 import ComplaintForm from "./pages/tenant/ComplaintForm";
+import MatronComplaintDetail from "./pages/matron/ComplaintDetail";
 
 function App() {
   return (
@@ -96,6 +97,10 @@ function App() {
               <Route path="/matron/bookings" element={<MatronBookings />} />
               <Route path="/matron/visitors" element={<MatronVisitors />} />
               <Route path="/matron/complaints" element={<MatronComplaints />} />
+              <Route
+                path="/matron/complaints/:id"
+                element={<MatronComplaintDetail />}
+              />
               <Route
                 path="/matron/advertisements"
                 element={<MatronAdvertisements />}
