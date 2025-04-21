@@ -38,6 +38,7 @@ import MatronComplaints from "./pages/matron/Complaints";
 import MatronAdvertisements from "./pages/matron/Advertisements";
 import MatronSettings from "./pages/matron/Settings";
 import MatronRoomsForm from "./pages/matron/RoomForm";
+import MatronPostAdvertisement from "./pages/matron/PostAdvertisement";
 // import ODD from "./pages/tenant/DDD";
 
 // Home Page
@@ -46,6 +47,7 @@ import MatronRoomDetail from "./pages/matron/RoomDetail";
 import BookRoom from "./pages/tenant/BookRoom";
 import ComplaintForm from "./pages/tenant/ComplaintForm";
 import MatronComplaintDetail from "./pages/matron/ComplaintDetail";
+import PostAdvertisement from "./pages/tenant/PostAdvertisement";
 
 function App() {
   return (
@@ -83,6 +85,10 @@ function App() {
                 path="/tenant/marketplace"
                 element={<TenantMarketplace />}
               />
+              <Route
+                path="/tenant/marketplace/add"
+                element={<PostAdvertisement />}
+              />
               <Route path="/tenant/settings" element={<TenantSettings />} />
             </Route>
           </Route>
@@ -100,6 +106,10 @@ function App() {
               <Route
                 path="/matron/complaints/:id"
                 element={<MatronComplaintDetail />}
+              />
+              <Route
+                path="/matron/advertisements/add"
+                element={<MatronPostAdvertisement />}
               />
               <Route
                 path="/matron/advertisements"

@@ -2,7 +2,14 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import api from "../../services/api";
-import { FaPlus, FaEdit, FaTrash, FaTags, FaUserAlt } from "react-icons/fa";
+import {
+  FaPlus,
+  FaEdit,
+  FaTrash,
+  FaTags,
+  FaUserAlt,
+  FaEye,
+} from "react-icons/fa";
 import { toast } from "react-toastify";
 import moment from "moment";
 
@@ -78,7 +85,7 @@ const MatronAdvertisements = () => {
         <h1 className="text-2xl font-semibold">Advertisements Management</h1>
         <Link
           to="/matron/advertisements/add"
-          className="bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 flex items-center"
+          className="bg-primary-600  px-4 py-2 rounded-md hover:bg-primary-700 flex items-center"
         >
           <FaPlus className="mr-2" /> Post Advertisement
         </Link>
@@ -238,7 +245,7 @@ const MatronAdvertisements = () => {
           </p>
           <Link
             to="/matron/advertisements/add"
-            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700"
+            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium  bg-primary-600 hover:bg-primary-700"
           >
             <FaPlus className="mr-2" /> Post an Advertisement
           </Link>
