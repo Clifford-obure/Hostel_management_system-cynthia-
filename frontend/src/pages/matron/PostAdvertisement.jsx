@@ -31,33 +31,19 @@ const PostAdvertisement = () => {
       expiryDate: "",
     },
     validationSchema: Yup.object({
-      title: Yup.string()
-        .required("Title is required")
-        .max(50, "Title must be 50 characters or less"),
-      description: Yup.string()
-        .required("Description is required")
-        .max(500, "Description must be 500 characters or less"),
-      price: Yup.number()
-        .min(0, "Price cannot be negative")
-        .when("isAnnouncement", {
-          is: true,
-          then: Yup.number().notRequired(),
-          otherwise: Yup.number().required(
-            "Price is required for marketplace items"
-          ),
-        }),
+      title: Yup.string().required("Title is required"),
+      description: Yup.string().required("Description is required"),
       category: Yup.string().required("Category is required"),
       contactInfo: Yup.string().required("Contact information is required"),
-      isImportant: Yup.boolean(),
-      expiryDate: Yup.date()
-        .min(new Date(), "Expiry date cannot be in the past")
-        .when("isAnnouncement", {
-          is: true,
-          then: Yup.date().required(
-            "Expiry date is required for announcements"
-          ),
-          otherwise: Yup.date().notRequired(),
-        }),
+      ...(isAnnouncement
+        ? {
+            expiryDate: Yup.string().required("Expiry date is required"),
+          }
+        : {
+            price: Yup.number()
+              .typeError("Price must be a number")
+              .required("Price is required"),
+          }),
     }),
     onSubmit: async (values) => {
       try {
