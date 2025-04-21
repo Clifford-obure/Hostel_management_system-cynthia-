@@ -48,6 +48,7 @@ import BookRoom from "./pages/tenant/BookRoom";
 import ComplaintForm from "./pages/tenant/ComplaintForm";
 import MatronComplaintDetail from "./pages/matron/ComplaintDetail";
 import PostAdvertisement from "./pages/tenant/PostAdvertisement";
+import AdvertisementDetail from "./pages/common/AdvertisementDetail";
 
 function App() {
   return (
@@ -89,6 +90,10 @@ function App() {
                 path="/tenant/marketplace/add"
                 element={<PostAdvertisement />}
               />
+              <Route
+                path="/tenant/marketplace/:id"
+                element={<AdvertisementDetail />}
+              />
               <Route path="/tenant/settings" element={<TenantSettings />} />
             </Route>
           </Route>
@@ -114,6 +119,10 @@ function App() {
               <Route
                 path="/matron/advertisements"
                 element={<MatronAdvertisements />}
+              />
+              <Route
+                path="/matron/advertisements/:id"
+                element={<AdvertisementDetail />}
               />
               <Route path="/matron/settings" element={<MatronSettings />} />
             </Route>
