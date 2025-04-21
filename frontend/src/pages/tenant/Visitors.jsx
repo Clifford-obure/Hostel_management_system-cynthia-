@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 // src/pages/tenant/Visitors.jsx
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import api from "../../services/api";
 import {
   FaUserFriends,
@@ -11,32 +11,30 @@ import {
 } from "react-icons/fa";
 import { toast } from "react-toastify";
 import moment from "moment";
-
+import { AuthProvider } from "../../contexts/authContext";
+import { useAuth } from "../../contexts/authContext";
 const TenantVisitors = () => {
   const [visitors, setVisitors] = useState([]);
+  const { user } = useAuth();
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
     status: "",
     dateRange: "all",
   });
-
+  // console.log(user);
   useEffect(() => {
-    // const fetchVisitors = async () => {
-    //   try {
-    //     const response = await api.get(
-    //       `/visitors/tenant/${
-    //         api.defaults.headers.common["Authorization"].split(" ")[1]
-    //       }`
-    //     );
-    //     setVisitors(response.data.data);
-    //   } catch (error) {
-    //     console.error("Error fetching visitors:", error);
-    //     toast.error("Failed to load visitor information. Please try again.");
-    //   } finally {
-    //     setLoading(false);
-    //   }
-    // };
-    // fetchVisitors();
+    const fetchVisitors = async () => {
+      try {
+        const response = await api.get(`/visitors/tenant/${user.id}`);
+        setVisitors(response.data.data);
+      } catch (error) {
+        console.error("Error fetching visitors:", error);
+        toast.error("Failed to load visitor information. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchVisitors();
   }, []);
 
   const handleFilterChange = (e) => {

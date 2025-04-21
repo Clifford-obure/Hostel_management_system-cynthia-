@@ -78,6 +78,27 @@ exports.login = async (req, res) => {
   }
 };
 
+// @desc    Get all tenants
+// @route   GET /api/users/tenants
+// @access  Private/Admin (or any other required role)
+exports.getTenants = async (req, res) => {
+  try {
+    const tenants = await User.find({ role: "tenant" });
+
+    res.status(200).json({
+      success: true,
+      count: tenants.length,
+      data: tenants,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
+
 // @desc    Get current logged in user
 // @route   GET /api/auth/me
 // @access  Private

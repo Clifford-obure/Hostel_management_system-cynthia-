@@ -9,7 +9,7 @@ import moment from "moment";
 
 const MatronVisitors = () => {
   const [visitors, setVisitors] = useState([]);
-  const [tenants] = useState([]);
+  const [tenants, setTenants] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showVisitorForm, setShowVisitorForm] = useState(false);
   const [filters, setFilters] = useState({
@@ -25,8 +25,8 @@ const MatronVisitors = () => {
         setVisitors(visitorsResponse.data.data);
 
         // Fetch all tenants for the form
-        // const tenantsResponse = await api.get("/auth/tenants");
-        // setTenants(tenantsResponse.data.data);
+        const tenantsResponse = await api.get("/auth/tenants");
+        setTenants(tenantsResponse.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
         toast.error("Failed to load data. Please try again.");
@@ -152,7 +152,7 @@ const MatronVisitors = () => {
         <h1 className="text-2xl font-semibold">Visitors Management</h1>
         <button
           onClick={() => setShowVisitorForm(!showVisitorForm)}
-          className="bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 flex items-center"
+          className="bg-primary-6 px-4 py-2 rounded-md hover:bg-primary-700 flex items-center"
         >
           <FaPlus className="mr-2" /> Register New Visitor
         </button>
@@ -354,7 +354,7 @@ const MatronVisitors = () => {
               </button>
               <button
                 type="submit"
-                className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700"
+                className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium  bg-primary-600 hover:bg-primary-700"
               >
                 Register Visitor
               </button>
