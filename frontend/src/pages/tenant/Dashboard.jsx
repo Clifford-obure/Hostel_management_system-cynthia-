@@ -25,6 +25,7 @@ const TenantDashboard = () => {
       try {
         // Fetch booking data to check if tenant has a room
         const bookingResponse = await api.get("/bookings/me");
+        // console.log("Booking Response Data:", bookingResponse);
 
         let roomDetails = null;
         let hasRoom = false;
@@ -40,7 +41,7 @@ const TenantDashboard = () => {
             roomDetails = activeBooking.room;
           }
         }
-        console.log("Booking Response:", bookingResponse.data.data);
+        // console.log("Booking Response:", bookingResponse.data.data);
         // Fetch visitor count
         const visitorResponse = await api.get(`/visitors/tenant/${user.id}`);
         const visitorCount = visitorResponse.data.count;

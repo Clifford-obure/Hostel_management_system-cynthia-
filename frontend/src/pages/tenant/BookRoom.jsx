@@ -30,7 +30,7 @@ const BookRoom = () => {
 
   const handleBooking = async (e) => {
     e.preventDefault();
-
+    console.log("we are here");
     if (!duration || duration < 1) {
       return toast.error("Please enter a valid duration.");
     }
@@ -44,12 +44,13 @@ const BookRoom = () => {
       const bookingData = {
         room: roomId,
         duration: parseInt(duration),
-        checkInDate, // ✅ Send the selected date
+        checkInDate,
       };
 
       await api.post("/bookings", bookingData);
+      console.log("booked successfully");
       toast.success("Room booked successfully!");
-      //   navigate("/tenant/bookings");
+      navigate("tenant/rooms");
     } catch (err) {
       toast.error(err.response?.data?.error || "Failed to book room.");
     } finally {
