@@ -1,4 +1,3 @@
-// src/pages/tenant/Booking.jsx
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../../services/api";
@@ -9,6 +8,8 @@ import {
   FaRegClock,
   FaExclamationCircle,
   FaCheckCircle,
+  FaTimes,
+  FaWallet,
 } from "react-icons/fa";
 import { toast } from "react-toastify";
 import moment from "moment";
@@ -17,6 +18,8 @@ const TenantBooking = () => {
   const navigate = useNavigate();
   const [booking, setBooking] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showPaymentInfo, setShowPaymentInfo] = useState(false);
+  const [hasPaid, setHasPaid] = useState(false);
 
   useEffect(() => {
     const fetchBooking = async () => {
@@ -30,6 +33,10 @@ const TenantBooking = () => {
           const activeBooking =
             bookings.find((b) => b.status === "confirmed") || bookings[0];
           setBooking(activeBooking);
+          // If payment status is already paid, update the state
+          if (activeBooking.paymentStatus === "paid") {
+            setHasPaid(true);
+          }
         }
       } catch (error) {
         console.error("Error fetching booking:", error);
@@ -60,6 +67,32 @@ const TenantBooking = () => {
         );
       }
     }
+  };
+
+  const handlePaymentConfirmation = async () => {
+    try {
+      // Send API request to update payment status to "paid"
+      const response = await api.put(`/bookings/${booking._id}`, {
+        paymentStatus: "paid",
+      });
+
+      if (response.data.success) {
+        // Update local states
+        setHasPaid(true);
+        setBooking({
+          ...booking,
+          paymentStatus: "paid",
+        });
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error confirming payment:", error);
+    }
+  };
+
+  const togglePaymentInfo = () => {
+    setShowPaymentInfo(!showPaymentInfo);
   };
 
   const getStatusBadge = (status) => {
@@ -187,7 +220,7 @@ const TenantBooking = () => {
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <div className="flex items-start">
                     <FaMoneyBillWave className="text-primary-600 mt-1 mr-3 h-5 w-5" />
-                    <div>
+                    <div className="w-full">
                       <p className="font-medium">
                         ${booking.room.price} per month
                       </p>
@@ -198,15 +231,88 @@ const TenantBooking = () => {
                         Payment Status:
                         <span
                           className={`ml-1 ${
-                            booking.paymentStatus === "paid"
+                            booking.paymentStatus === "paid" || hasPaid
                               ? "text-green-600"
                               : "text-yellow-600"
                           }`}
                         >
-                          {booking.paymentStatus.charAt(0).toUpperCase() +
-                            booking.paymentStatus.slice(1)}
+                          {hasPaid
+                            ? "Paid"
+                            : booking.paymentStatus.charAt(0).toUpperCase() +
+                              booking.paymentStatus.slice(1)}
                         </span>
                       </p>
+
+                      {booking.status !== "cancelled" &&
+                        booking.paymentStatus !== "paid" &&
+                        !hasPaid && (
+                          <button
+                            onClick={togglePaymentInfo}
+                            className="mt-3 w-full px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700"
+                          >
+                            <FaWallet className="inline-block mr-2" />
+                            {showPaymentInfo
+                              ? "Hide Payment Info"
+                              : "Make Payment"}
+                          </button>
+                        )}
+
+                      {showPaymentInfo &&
+                        booking.paymentStatus !== "paid" &&
+                        !hasPaid && (
+                          <div className="mt-3 p-3 border border-gray-200 rounded-md bg-gray-50">
+                            <h4 className="font-medium text-gray-800 mb-2">
+                              Payment Details
+                            </h4>
+                            <p className="text-sm text-gray-700">
+                              Paybill Number:{" "}
+                              <span className="font-medium">123456</span>
+                            </p>
+                            <p className="text-sm text-gray-700">
+                              Account Number:{" "}
+                              <span className="font-medium">
+                                {booking._id.substring(0, 8)}
+                              </span>
+                            </p>
+                            <p className="text-sm text-gray-700">
+                              Amount:{" "}
+                              <span className="font-medium">
+                                ${booking.totalAmount}
+                              </span>
+                            </p>
+                            <p className="text-sm italic text-gray-500 mt-2">
+                              Once payment is complete, click the button below
+                              to confirm.
+                            </p>
+                            <button
+                              onClick={handlePaymentConfirmation}
+                              className="mt-3 w-full px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700"
+                            >
+                              I Have Paid
+                            </button>
+                          </div>
+                        )}
+
+                      {(hasPaid || booking.paymentStatus === "paid") &&
+                        booking.status === "pending" && (
+                          <div className="mt-3 p-3 border border-gray-200 rounded-md bg-green-50">
+                            <p className="text-sm text-green-700 flex items-center">
+                              <FaCheckCircle className="mr-2" />
+                              Payment confirmed. Waiting for matron
+                              verification.
+                            </p>
+                          </div>
+                        )}
+
+                      {booking.paymentStatus === "paid" &&
+                        booking.status === "confirmed" && (
+                          <div className="mt-3 p-3 border border-gray-200 rounded-md bg-green-50">
+                            <p className="text-sm text-green-700 flex items-center">
+                              <FaCheckCircle className="mr-2" />
+                              Payment verified. Booking confirmed.
+                            </p>
+                          </div>
+                        )}
                     </div>
                   </div>
                 </div>
@@ -238,7 +344,7 @@ const TenantBooking = () => {
           </div>
 
           <div className="mt-6 flex justify-end">
-            {booking.status === "pending" && (
+            {booking.status === "pending" && !hasPaid && (
               <button
                 onClick={handleCancelBooking}
                 className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"

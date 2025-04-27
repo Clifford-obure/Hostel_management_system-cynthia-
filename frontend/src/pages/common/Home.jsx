@@ -19,7 +19,7 @@ const Home = () => {
             <div className="flex flex-col md:flex-row">
               <div className="md:w-1/2 mb-8 md:mb-0">
                 <h1 className="text-4xl font-bold mb-4">
-                  Welcome to Ladies Hostel Management
+                  Welcome to Hostel Management
                 </h1>
                 <p className="text-xl mb-8">
                   A safe, comfortable, and modern living experience for female

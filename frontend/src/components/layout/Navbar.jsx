@@ -14,7 +14,7 @@ const Navbar = () => {
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <Link to="/" className="text-xl font-bold">
-                Ladies Hostel
+                Hostel Management System
               </Link>
             </div>
           </div>
@@ -28,7 +28,7 @@ const Navbar = () => {
                     <button className="flex items-center text-white">
                       <FaUserCircle className="h-6 w-6" />
                     </button>
-                    <div className="absolute right-0 w-48 mt-2 py-2 bg-white rounded-md shadow-lg hidden group-hover:block z-10">
+                    <div className="absolute right-0 w-48 mt-1 py-2 bg-white rounded-md shadow-lg hidden group-hover:block z-10">
                       <Link
                         to={
                           isMatron ? "/matron/dashboard" : "/tenant/dashboard"

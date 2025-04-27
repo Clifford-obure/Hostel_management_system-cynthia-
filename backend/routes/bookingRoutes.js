@@ -22,7 +22,7 @@ router.route("/me").get(protect, authorize("tenant"), getMyBookings);
 router
   .route("/:id")
   .get(protect, getBooking)
-  .put(protect, authorize("matron"), updateBooking)
+  .put(protect, authorize("matron","tenant"), updateBooking)
   .delete(protect, authorize("matron"), deleteBooking);
 
 module.exports = router;

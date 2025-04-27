@@ -16,7 +16,7 @@ const RoomForm = () => {
   const [previewUrls, setPreviewUrls] = useState([]);
 
   const isEditMode = !!id;
-
+  const notify = () => toast("Wow so success!");
   useEffect(() => {
     const fetchRoomDetail = async () => {
       if (isEditMode) {
@@ -126,11 +126,11 @@ const RoomForm = () => {
             },
           });
         }
-
+        console.log(toast);
         if (response.data.success) {
-          toast.success(
-            `Room ${isEditMode ? "updated" : "created"} successfully!`
-          );
+          {
+            notify;
+          }
           navigate("/matron/rooms");
         }
       } catch (error) {
@@ -479,7 +479,7 @@ const RoomForm = () => {
             <div className="mt-8 flex justify-end">
               <button
                 type="button"
-                onClick={() => navigate("/matron/rooms")}
+                // onClick={() => navigate("/matron/rooms")}
                 className="mr-3 px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
               >
                 Cancel
